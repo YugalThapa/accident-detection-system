@@ -5,7 +5,7 @@
 
 void initIRSensor()
 {
-    pinMode(IR_SENSOR_PIN, INPUT);
+    pinMode(IR_SENSOR_PIN, INPUT);      // IR_SENSOR_PIN = 18
 }
 
 bool isHelmetWorn()
