@@ -1,6 +1,7 @@
 #include "config.h"
 #include "IR_sensor.h"
 #include "gps.h"
+#include "buzzer.h"
 
 void setup()
 {
@@ -9,6 +10,7 @@ void setup()
     // initilizing all components
     initIRSensor();
     initGPS();
+    initBuzzer();
 
     Serial.println("System Ready");
 }
@@ -18,8 +20,10 @@ void loop()
     if (isHelmetWorn())     // runs when helmet is worn, IR detect object
     {
         Serial.println("Helmet Worn");
+        buzzerOn();            // buzzer on whrn ir detect, for now ir is used as accident detection
+        Serial.println("Buzzer ON");
         updateGPS();        // updating gps only after helmet is worn
-        
+
         if (isGPSFixed())
         {
             Serial.println("GPS FIXED");
@@ -43,6 +47,8 @@ void loop()
     else
     {
         Serial.println("Helmet Not Worn");
+        buzzerOff();
+        Serial.println("Buzzer OFF");
     }
     //Serial.println(getIRValue());   // print 0 when detected otherwise 1
     delay(500);
