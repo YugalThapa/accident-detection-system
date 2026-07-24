@@ -16,6 +16,8 @@ static uint8_t satellites = 0;    // Stores the number of satellites currently b
 static String date = "";          // store current date as 04/08/2026
 static String timeUTC = "";       // store current time as 14:25:32
 
+static String googleMapLink = ""; // store google map link
+
 static bool gpsFix = false;       // if false then no gps fix, if yes then valid position
 
 // initilizing gps 
@@ -62,6 +64,39 @@ void updateGPS()
 
             date = String(buffer);
 
+            // Convert UTC to Nepal Standard Time (UTC +5:45)
+
+            // int hour = gps.time.hour();
+            // int minute = gps.time.minute();
+            // int second = gps.time.second();
+
+            // // Add Nepal offset
+            // minute += 45;
+            // hour += 5;
+
+            // // Handle minute overflow
+            // if (minute >= 60)
+            // {
+            //     minute -= 60;
+            //     hour++;
+            // }
+
+            // // Handle hour overflow
+            // if (hour >= 24)
+            // {
+            //     hour -= 24;
+            // }
+
+            // char buffer[20];
+
+            // sprintf(buffer,
+            //         "%02d:%02d:%02d",
+            //         hour,
+            //         minute,
+            //         second);
+
+            // timeUTC = String(buffer);
+
             sprintf(buffer,
                     "%02d:%02d:%02d",
                     gps.time.hour(),
@@ -69,6 +104,8 @@ void updateGPS()
                     gps.time.second());
 
             timeUTC = String(buffer);
+
+            googleMapLink = "https://www.google.com/maps?q=" + String(latitude, 6) + "," + String(longitude, 6);
         }
     }
 }
@@ -119,4 +156,9 @@ String getDate()
 String getTime()
 {
     return timeUTC;
+}
+
+String getGoogleMapsLink()
+{
+    return googleMapLink;
 }

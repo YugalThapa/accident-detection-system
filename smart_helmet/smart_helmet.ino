@@ -18,7 +18,8 @@ void setup()
 void loop()
 {
     if (isHelmetWorn())     // runs when helmet is worn, IR detect object
-    {
+    {   
+        // for now IR detection is used as accident detection for testing
         Serial.println("Helmet Worn");
         buzzerOn();            // buzzer on whrn ir detect, for now ir is used as accident detection
         Serial.println("Buzzer ON");
@@ -34,8 +35,23 @@ void loop()
             Serial.print("Longitude: ");
             Serial.println(getLongitude(), 6);
 
+            Serial.print("Altitude: ");
+            Serial.println(getAltitude());
+
+            Serial.print("Speed: ");
+            Serial.println(getSpeed());
+
             Serial.print("Satellites: ");
             Serial.println(getSatellites());
+
+            Serial.print("Date: ");
+            Serial.println(getDate());
+
+            Serial.print("Time: ");
+            Serial.println(getTime());
+
+            Serial.print("Google Maps: ");
+            Serial.println(getGoogleMapsLink());
         }
         else
         {

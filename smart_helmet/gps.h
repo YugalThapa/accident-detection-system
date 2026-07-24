@@ -20,4 +20,6 @@ uint8_t getSatellites();
 String getDate();
 String getTime();
 
+String getGoogleMapsLink();
+
 #endif
