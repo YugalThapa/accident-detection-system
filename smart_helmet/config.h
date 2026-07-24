@@ -8,8 +8,8 @@
 
 
 // GPS (UART2)
-#define GPS_RX_PIN          16      // ESP32 receives from GPS TX
-#define GPS_TX_PIN          17      // ESP32 transmits to GPS RX
+#define GPS_RX_PIN          16      // ESP32 receives (RX2)from GPS TX
+#define GPS_TX_PIN          17      // ESP32 transmits (TX2) to GPS RX
 
 
 // SIM800L (UART1)
@@ -28,6 +28,7 @@
 // Push Buttons
 #define SOS_BUTTON_PIN      27
 #define CANCEL_BUTTON_PIN   33
+#define ACCIDENT_BUTTON_PIN  25
 
 
 // SERIAL BAUD RATES

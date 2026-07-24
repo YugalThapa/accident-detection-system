@@ -2,6 +2,7 @@
 #include "IR_sensor.h"
 #include "gps.h"
 #include "buzzer.h"
+#include "button.h"
 
 void setup()
 {
@@ -11,20 +12,56 @@ void setup()
     initIRSensor();
     initGPS();
     initBuzzer();
+    initButtons();
 
     Serial.println("System Ready");
 }
 
 void loop()
 {
-    if (isHelmetWorn())     // runs when helmet is worn, IR detect object
-    {   
-        // for now IR detection is used as accident detection for testing
-        Serial.println("Helmet Worn");
-        buzzerOn();            // buzzer on whrn ir detect, for now ir is used as accident detection
-        Serial.println("Buzzer ON");
-        updateGPS();        // updating gps only after helmet is worn
+    updateGPS();          // Always keep GPS updated
 
+    if (!isHelmetWorn())        // testing false condition first, if helmet not worn then return to next loop continuously check for helmet worn
+    {
+        buzzerOff();
+        Serial.println("Helmet Not Worn");
+        delay(500);
+
+        return;
+    }
+
+    // if helmet is worn then system continue to check for accident
+    Serial.println("Helmet Worn");
+
+    // Simulate accident
+    if (isAccidentPressed())            // temprory accident simulation using push button
+    {
+        Serial.println("ACCIDENT DETECTED!");
+
+        buzzerOn();
+
+        unsigned long startTime = millis();
+
+        // timer for cancel button
+        while (millis() - startTime < ACCIDENT_DELAY)
+        {
+            if (isCancelPressed())
+            {
+                Serial.println("Alert Cancelled");
+
+                buzzerOff();
+
+                return;
+            }
+
+            delay(20);
+        }
+
+        // buzzerOff();
+
+        Serial.println("Sending Emergency Alert...");
+
+        // gps information
         if (isGPSFixed())
         {
             Serial.println("GPS FIXED");
@@ -59,14 +96,15 @@ void loop()
             Serial.print("Visible Satellites: ");
             Serial.println(getSatellites());
         }
+
+        // sendSMS();   <-- Later
     }
-    else
-    {
-        Serial.println("Helmet Not Worn");
-        buzzerOff();
-        Serial.println("Buzzer OFF");
-    }
-    //Serial.println(getIRValue());   // print 0 when detected otherwise 1
+
     delay(500);
 }
+
+
+
+
+   
 
