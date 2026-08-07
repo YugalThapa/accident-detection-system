@@ -3,6 +3,9 @@
 #include "gps.h"
 #include "buzzer.h"
 #include "button.h"
+#include "mpu6050.h"
+
+MPU6050 imu;
 
 void setup()
 {
@@ -13,18 +16,25 @@ void setup()
     initGPS();
     initBuzzer();
     initButtons();
+    imu.begin();
+    imu.calibrate(200);
 
     Serial.println("System Ready");
 }
 
 void loop()
 {
+    imu.update();
     updateGPS();          // Always keep GPS updated
+
+    float rawMagnitude = imu.getRawAccelerationMagnitude();
 
     if (!isHelmetWorn())        // testing false condition first, if helmet not worn then return to next loop continuously check for helmet worn
     {
         buzzerOff();
         Serial.println("Helmet Not Worn");
+        Serial.print("rawMagnitude: ");
+        Serial.println(rawMagnitude);
         delay(500);
 
         return;
@@ -32,9 +42,11 @@ void loop()
 
     // if helmet is worn then system continue to check for accident
     Serial.println("Helmet Worn");
+    Serial.print("rawMagnitude: ");
+    Serial.println(rawMagnitude);
 
     // Simulate accident
-    if (isAccidentPressed())            // temprory accident simulation using push button
+    if (imu.isRealAccidentDetected())            // temprory accident simulation using push button
     {
         Serial.println("ACCIDENT DETECTED!");
 
