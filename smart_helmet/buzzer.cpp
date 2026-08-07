@@ -31,8 +31,7 @@ void toggleBuzzer()
 void beep(unsigned int duration)
 {
     buzzerOn();
-
     delay(duration);
-
     buzzerOff();
+    delay(duration);
 }
