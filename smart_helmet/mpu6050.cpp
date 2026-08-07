@@ -1,4 +1,5 @@
 #include "mpu6050.h"
+#include "config.h"
 #include <math.h>
 
 #define PWR_MGMT_1 0x6B
@@ -6,7 +7,7 @@
 #define ACCEL_XOUT_H 0x3B
 
 bool MPU6050::begin() {
-  Wire.begin(21, 22);
+  Wire.begin(SDA_PIN, SCL_PIN);
 
   // Wake up the sensor
   writeRegister(0x6B, 0);
