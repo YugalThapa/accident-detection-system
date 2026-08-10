@@ -4,6 +4,7 @@
 #include "buzzer.h"
 #include "button.h"
 #include "mpu6050.h"
+#include "sim.h"
 
 void sendAlertMessage();
 MPU6050 imu;
@@ -20,6 +21,7 @@ void setup()
     initButtons();
     imu.begin();            // mpu6050 initialization
     imu.calibrate(200);     // mpu6050 calibration
+    initSIM();
 
     Serial.println("System Ready");
 }
@@ -93,19 +95,29 @@ void loop()
 }
 
 // Sends alert message
-void sendAlertMessage(){
+void sendAlertMessage()
+{
+    Serial.println("================================");
     Serial.println("Sending Emergency Alert...");
+    Serial.println("================================");
 
-    // gps information
+    String message;
+
+    message += "SMART HELMET EMERGENCY ALERT!\n";
+    message += "Possible accident detected.\n\n";
+
     if (isGPSFixed())
     {
+        float latitude = getLatitude();
+        float longitude = getLongitude();
+
         Serial.println("GPS FIXED");
 
         Serial.print("Latitude : ");
-        Serial.println(getLatitude(), 6);
+        Serial.println(latitude, 6);
 
         Serial.print("Longitude: ");
-        Serial.println(getLongitude(), 6);
+        Serial.println(longitude, 6);
 
         Serial.print("Altitude: ");
         Serial.println(getAltitude());
@@ -124,20 +136,56 @@ void sendAlertMessage(){
 
         Serial.print("Google Maps: ");
         Serial.println(getGoogleMapsLink());
+
+        message += "Latitude: ";
+        message += String(latitude, 6);
+
+        message += "\nLongitude: ";
+        message += String(longitude, 6);
+
+        message += "\nTime: ";
+        message += String(getTime());
+
+        message += "\nDate: ";
+        message += String(getDate());
+
+        message += "\n\nLocation:\n";
+        message += getGoogleMapsLink();
     }
     else
     {
-        Serial.println("Searching for satellites...");
+        Serial.println("GPS FIX NOT AVAILABLE");
+
         Serial.print("Visible Satellites: ");
         Serial.println(getSatellites());
+
+        message += "GPS location unavailable.\n";
+        message += "Please check the rider immediately.";
     }
-
     
-
-    // sendSMS();   <-- Later
+    simCommunication(message);
+    
 }
 
 
+void simCommunication(String message){
+    // Check communication
+  sendCommand("AT", 1000);
 
+  // Check SIM
+  sendCommand("AT+CPIN?", 1000);
+
+  // Check signal
+  sendCommand("AT+CSQ", 1000);
+
+  // Check network registration
+  sendCommand("AT+CREG?", 1000);
+
+  // Set SMS text mode
+  sendCommand("AT+CMGF=1", 1000);
+
+  // Send SMS
+  //sendSMS(EMERGENCY_PHONE, message);
+}
    
 
