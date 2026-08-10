@@ -191,7 +191,7 @@ float MPU6050::getRawAccelerationMagnitude() {
 }
 
 bool MPU6050::isRealAccidentDetected(){
-  if (getRawAccelerationMagnitude() > 1.2) {
+  if (getRawAccelerationMagnitude() > ACCIDENT_THRESHOLD) {
     return true;
   }
   else{

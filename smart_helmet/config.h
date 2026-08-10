@@ -14,7 +14,7 @@
 
 // SIM800L (UART1)
 #define GSM_RX_PIN          26      // ESP32 receives from GSM TX
-#define GSM_TX_PIN          25      // ESP32 transmits to GSM RX
+#define GSM_TX_PIN          27      // ESP32 transmits to GSM RX
 
 
 // IR Sensor
@@ -26,9 +26,8 @@
 
 
 // Push Buttons
-#define SOS_BUTTON_PIN      27
+#define SOS_BUTTON_PIN      32
 #define CANCEL_BUTTON_PIN   33
-#define ACCIDENT_BUTTON_PIN  25
 
 
 // SERIAL BAUD RATES
@@ -39,7 +38,7 @@
 
 // ACCIDENT DETECTION PARAMETERS
 // Acceleration threshold (g)
-#define ACCIDENT_THRESHOLD      3.0
+#define ACCIDENT_THRESHOLD      2.0
 // Helmet tilt angle (degree)
 #define TILT_THRESHOLD          60
 // Accident confirmation delay (ms)
@@ -49,9 +48,8 @@
 // GPS SETTINGS
 #define GPS_TIMEOUT         10000      // milliseconds
 // GSM SETTINGS
-#define PHONE_NUMBER        "+97798XXXXXXXX"
-// SMS Message
-#define ALERT_MESSAGE       "Emergency! Accident detected. Location:"
+#define EMERGENCY_PHONE "+9779816404913"
+
 
 
 // BUZZER SETTINGS
