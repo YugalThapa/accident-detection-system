@@ -1,7 +1,7 @@
 #include "sim.h"
 #include "config.h"
 
-static HardwareSerial sim800(1);
+static HardwareSerial sim800(2);
 
 void initSIM(){
     Serial.begin(115200);

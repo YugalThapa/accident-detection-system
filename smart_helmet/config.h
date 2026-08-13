@@ -8,17 +8,17 @@
 
 
 // GPS (UART2)
-#define GPS_RX_PIN          16      // ESP32 receives (RX2)from GPS TX
-#define GPS_TX_PIN          17      // ESP32 transmits (TX2) to GPS RX
+#define GPS_RX_PIN          19      // 
+#define GPS_TX_PIN          18      // ESP32 transmits (TX2) to GPS RX
 
 
 // SIM800L (UART1)
-#define GSM_RX_PIN          26      // ESP32 receives from GSM TX
-#define GSM_TX_PIN          27      // ESP32 transmits to GSM RX
+#define GSM_RX_PIN          16      // ESP32 receives from GSM TX
+#define GSM_TX_PIN          17      // ESP32 transmits to GSM RX
 
 
 // IR Sensor
-#define IR_SENSOR_PIN       18
+#define IR_SENSOR_PIN       34
 
 
 // Active Buzzer

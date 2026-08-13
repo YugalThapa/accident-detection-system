@@ -3,7 +3,7 @@
 
 // Private Objects 
 static TinyGPSPlus gps;               // new object named "gps" is created
-static HardwareSerial gpsSerial(2);   // using UART2 (TX2,RX2) for communication
+static HardwareSerial gpsSerial(1);   // using UART2 (TX2,RX2) for communication
 
 // GPS Data 
 static float latitude = 0.0;      // store latitude

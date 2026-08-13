@@ -48,6 +48,8 @@ void loop()
     Serial.println("Helmet Worn");
     Serial.print("rawMagnitude: ");
     Serial.println(rawMagnitude);
+    Serial.print("Visible Satellites: ");
+    Serial.println(getSatellites());
 
     // manual sos
     if (isSOSPressed()){
@@ -185,7 +187,7 @@ void simCommunication(String message){
   sendCommand("AT+CMGF=1", 1000);
 
   // Send SMS
-  //sendSMS(EMERGENCY_PHONE, message);
+  sendSMS(EMERGENCY_PHONE, message);
 }
    
 
