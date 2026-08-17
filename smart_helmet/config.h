@@ -26,7 +26,7 @@
 
 
 // Push Buttons
-#define SOS_BUTTON_PIN      32
+#define SOS_BUTTON_PIN      27
 #define CANCEL_BUTTON_PIN   33
 
 
